@@ -53,10 +53,8 @@ const CARD_TEMPLATE = ""
   
           // create cards out of the config
           this._cards = [];
-          // TODO #functional-programming: use Array.map() instead.
           this._config.ids.map((id) =>  this._cards.push(new CardComponent(id)));
-  
-          // TODO #functional-programming: use Array.forEach() instead.
+
           this._cards.forEach((card) => {
             this._boardElement.appendChild(card.getElement());
             card.getElement().addEventListener(
@@ -86,30 +84,17 @@ const CARD_TEMPLATE = ""
       );
     };
     
-    fetchConfig(cb) {
-      const xhr =
-        typeof XMLHttpRequest != "undefined"
-          ? new XMLHttpRequest()
-          : new ActiveXObject("Microsoft.XMLHTTP");
-  
-      xhr.open("get", `${environment.api.host}/board?size=${this._size}`, true);
-  
-      xhr.onreadystatechange = () => {
-        let status;
-        let data;
-        // https://xhr.spec.whatwg.org/#dom-xmlhttprequest-readystate
-        if (xhr.readyState == 4) {
-          // `DONE`
-          status = xhr.status;
-          if (status == 200) {
-            data = JSON.parse(xhr.responseText);
-            cb(data);
-          } else {
-            throw new Error(status);
-          }
+    async fetchConfig(cb) {
+      return await fetch(`${environment.api.host}/board?size=${this._size}`).then(
+        (response) => {
+          if (response.ok) {
+            return response.json().then((data) => {
+              cb(data);
+            }
+          );
         }
-      };
-      xhr.send();
+      }
+      );
     };
 
     goToScore() {
