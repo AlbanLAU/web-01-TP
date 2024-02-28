@@ -6,7 +6,7 @@ import { Component } from "./component";
 
   constructor() {
     super(template);
-    var params = parseUrl();
+    const params = parseUrl();
     this.name = params.name;
     this.size = parseInt(params.size);
     this.time = parseInt(params.time);

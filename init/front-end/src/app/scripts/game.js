@@ -15,7 +15,7 @@ import card7 from "/src/assets/cards/card-7.png";
 import card8 from "/src/assets/cards/card-8.png";
 import card9 from "/src/assets/cards/card-9.png";
 
-var CARD_TEMPLATE = ""
+const CARD_TEMPLATE = ""
   .concat('<main class="card-cmp">')
   .concat('  <div class="card-wrapper">')
   .concat('    <img class="card front-face" alt="card" />')
@@ -23,7 +23,7 @@ var CARD_TEMPLATE = ""
   .concat("  </div>")
   .concat("</main>");
 
-  var environment = {
+  const environment = {
     api: {
       host: "http://localhost:8081",
     },
@@ -59,12 +59,17 @@ var CARD_TEMPLATE = ""
           }
   
           // TODO #functional-programming: use Array.forEach() instead.
-          // TODO #let-const: replace var with let.
           for (let i in this._cards) {
             let card = this._cards[i];
+            this._boardElement.appendChild(card.getElement());
   
-            // TODO #let-const: extract function _appendCard (ie: copy its body here and remove the function)
-            this._appendCard(card);
+            card.getElement().addEventListener(
+              "click",
+              // TODO #arrow-function: use arrow function instead.
+              function () {
+                this._flipCard(card);
+              }.bind(this)
+            );
           }
   
           this.start();
@@ -72,21 +77,9 @@ var CARD_TEMPLATE = ""
       );
     };
 
-    _appendCard(card) {
-      this._boardElement.appendChild(card.getElement());
-  
-      card.getElement().addEventListener(
-        "click",
-        // TODO #arrow-function: use arrow function instead.
-        function () {
-          this._flipCard(card);
-        }.bind(this)
-      );
-    };
-
     start() {
       this._startTime = Date.now();
-      var seconds = 0;
+      let seconds = 0;
       // TODO #template-literals:  use template literals (backquotes)
       document.querySelector("nav .navbar-title").textContent =
         "Player: " + this._name + ". Elapsed time: " + seconds++;
@@ -103,7 +96,7 @@ var CARD_TEMPLATE = ""
     };
     
     fetchConfig(cb) {
-      var xhr =
+      const xhr =
         typeof XMLHttpRequest != "undefined"
           ? new XMLHttpRequest()
           : new ActiveXObject("Microsoft.XMLHTTP");
@@ -113,8 +106,8 @@ var CARD_TEMPLATE = ""
   
       // TODO #arrow-function: use arrow function instead.
       xhr.onreadystatechange = function () {
-        var status;
-        var data;
+        let status;
+        let data;
         // https://xhr.spec.whatwg.org/#dom-xmlhttprequest-readystate
         if (xhr.readyState == 4) {
           // `DONE`
@@ -131,7 +124,7 @@ var CARD_TEMPLATE = ""
     };
 
     goToScore() {
-      var timeElapsedInSeconds = Math.floor(
+      const timeElapsedInSeconds = Math.floor(
         (Date.now() - this._startTime) / 1000
       );
       clearInterval(this._timer);
@@ -139,7 +132,7 @@ var CARD_TEMPLATE = ""
       setTimeout(
         // TODO #arrow-function: use arrow function instead.
         function () {
-          var scorePage = "./#score";
+          const scorePage = "./#score";
           // TODO #template-literals:  use template literals (backquotes)
           window.location =
             scorePage +
@@ -211,7 +204,7 @@ var CARD_TEMPLATE = ""
   // put component in global scope, to be runnable right from the HTML.
 
   // TODO #card-component: Change images location to /app/components/game/card/assets/***.png
-  var CARDS_IMAGE = [
+  const CARDS_IMAGE = [
     back,
     card0,
     card1,
