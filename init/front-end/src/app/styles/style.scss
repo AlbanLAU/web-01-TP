@@ -1,0 +1,40 @@
+@import './variables';
+
+body {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: $white;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body > main {
+  overflow: auto;
+}
+
+/* global style */
+.bg-primary {
+  background-color: $primary-color !important;
+}
+
+.btn-outline-primary {
+  border-color: $primary-color;
+  color: $primary-color;
+}
+
+.btn-outline-primary:hover {
+  border-color: $primary-color;
+  background-color: $primary-color;
+  color: $white;
+}
+
+.form-control:hover,
+.form-control:focus {
+  box-shadow: 0 0 0 0.25rem $shadow;
+  border-color: $primary-color;
+}
+.bg-dark * {
+  color: $white;
+}

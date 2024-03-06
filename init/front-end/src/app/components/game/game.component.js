@@ -3,7 +3,7 @@ import template from "./game.component.html";
 import { Component } from "../../scripts/component";
 import parseUrl from "../../scripts/utils";
 
-import "./game.component.css";
+import "./game.component.scss";
 import { CardComponent } from "./card/card.component";
  
   const environment = {
@@ -16,10 +16,7 @@ import { CardComponent } from "./card/card.component";
   export default class GameComponent extends Component{
     constructor() {
       super(template);
-      // gather parameters from URL
       const params = parseUrl();
-
-      // save player name & game ize
       this._name = params.name;
       this._size = parseInt(params.size) || 9;
       this._flippedCard = null;
@@ -27,14 +24,12 @@ import { CardComponent } from "./card/card.component";
     }
 
     init() {
-      // fetch the cards configuration from the server
       this.fetchConfig(
 
         (config) => {
           this._config = config;
           this._boardElement = document.querySelector(".cards");
-  
-          // create cards out of the config
+
           this._cards = [];
           this._config.ids.map((id) =>  this._cards.push(new CardComponent(id)));
 
@@ -104,24 +99,15 @@ import { CardComponent } from "./card/card.component";
       if (card.flipped) {
         return;
       }
-  
-      // flip the card
       card.flip();
-  
-      // if flipped first card of the pair
+
       if (!this._flippedCard) {
-        // keep this card flipped and wait for the second card of the pair
         this._flippedCard = card;
       } else {
-        // second card of the pair flipped...
-  
-        // if cards are the same
         if (card.equals(this._flippedCard)) {
           this._flippedCard.matched = true;
           card.matched = true;
           this._matchedPairs += 1;
-  
-          // reset flipped card for the next turn.
           this._flippedCard = null;
   
           if (this._matchedPairs === this._size) {
@@ -130,16 +116,12 @@ import { CardComponent } from "./card/card.component";
         } else {
           this._busy = true;
   
-          // cards did not match
-          // wait a short amount of time before hiding both cards
           setTimeout(
             () => {
-              // hide the cards
               this._flippedCard.flip();
               card.flip();
               this._busy = false;
   
-              // reset flipped card for the next turn.
               this._flippedCard = null;
             },
             500

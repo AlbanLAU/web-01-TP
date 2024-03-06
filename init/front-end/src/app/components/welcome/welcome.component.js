@@ -1,6 +1,6 @@
 import template from "./welcome.component.html";
 import { Component } from "../../scripts/component";
-import "./welcome.component.css";
+import "./welcome.component.scss";
 
   export default class WelcomeComponent extends Component{
     constructor() {
@@ -36,4 +36,3 @@ import "./welcome.component.css";
     }
 
   }
-  // put component in global scope, to be runnable right from the HTML.
