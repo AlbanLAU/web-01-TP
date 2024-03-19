@@ -1,0 +1,17 @@
+.score-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 10px 0;
+    padding: 0 10px;
+    border: 1px solid #000;
+    margin-bottom: 5px;
+
+    .score-name, .score-size, .score-time{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        width: 20%;
+    }
+}

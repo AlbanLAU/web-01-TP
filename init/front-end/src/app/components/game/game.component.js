@@ -75,11 +75,20 @@ import { CardComponent } from "./card/card.component";
       );
     };
 
-    goToScore() {
+    async goToScore() {
       const timeElapsedInSeconds = Math.floor(
         (Date.now() - this._startTime) / 1000
       );
       clearInterval(this._timer);
+
+      await fetch(`${environment.api.host}/scores`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: this._name, time: timeElapsedInSeconds, size: this._size }),
+      });
   
       setTimeout(
         () => {
